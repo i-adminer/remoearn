@@ -14,7 +14,11 @@ import { cn } from "@/lib/utils";
 
 function AnimatedMenuIcon({ open }: Readonly<{ open: boolean }>) {
   return (
-    <svg viewBox="0 0 24 24" className="size-5 overflow-visible" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-5 overflow-visible"
+      aria-hidden="true"
+    >
       <line
         x1="4"
         y1="7"
@@ -74,8 +78,11 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
       <PageShell>
         <div className="rounded-[1.75rem] border border-border/70 bg-background/90 shadow-[0_28px_90px_-28px_rgba(29,78,216,0.5)] backdrop-blur-2xl transition-[transform,box-shadow] duration-300 ease-out hover:scale-[0.997] hover:shadow-[0_34px_110px_-30px_rgba(29,78,216,0.58)]">
           <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5 lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-4">
-            <Link href="/" className="flex items-center gap-2 transition-transform duration-200 hover:-translate-y-0.5 lg:hidden">
-              <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/70 bg-secondary shadow-sm">
+            <Link
+              href="/"
+              className="flex items-center gap-2 transition-transform duration-200 hover:-translate-y-0.5 lg:hidden"
+            >
+              <div className="flex size-9 shrink-0 items-center justify-center">
                 <Image
                   src="/logo.png"
                   alt="RemoEarn logo"
@@ -87,7 +94,10 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
               </div>
             </Link>
 
-            <Link href="/" className="hidden items-center gap-3 transition-transform duration-200 hover:-translate-y-0.5 lg:flex">
+            <Link
+              href="/"
+              className="hidden items-center gap-3 transition-transform duration-200 hover:-translate-y-0.5 lg:flex"
+            >
               <div className="flex size-12 shrink-0 items-center justify-center ">
                 <Image
                   src="/logo.png"
@@ -99,7 +109,9 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
                 />
               </div>
               <div className="min-w-0">
-                <p className="text-base font-semibold leading-none sm:text-lg">RemoEarn</p>
+                <p className="text-base font-semibold leading-none sm:text-lg">
+                  RemoEarn
+                </p>
                 <p className="mt-1 hidden text-xs font-semibold text-muted-foreground sm:block">
                   Learn. Work. Earn Remotely.
                 </p>
@@ -125,7 +137,11 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
             </nav>
 
             <div className="flex items-center justify-end gap-2">
-              <Button asChild size="sm" className="hidden rounded-full px-4 sm:inline-flex">
+              <Button
+                asChild
+                size="sm"
+                className="hidden rounded-full px-4 sm:inline-flex"
+              >
                 <Link href="/shop">
                   <Sparkles className="mr-2 size-4" />
                   Start Shopping
@@ -149,7 +165,9 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
           <div
             className={cn(
               "grid overflow-hidden border-t border-border/70 px-4 transition-[grid-template-rows,opacity,padding] duration-300 ease-out lg:hidden sm:px-5",
-              mobileOpen ? "grid-rows-[1fr] opacity-100 py-3" : "grid-rows-[0fr] opacity-0 py-0",
+              mobileOpen
+                ? "grid-rows-[1fr] opacity-100 py-3"
+                : "grid-rows-[0fr] opacity-0 py-0",
             )}
           >
             <div className="min-h-0 overflow-hidden">
@@ -169,7 +187,9 @@ function HeaderShell({ pathname }: Readonly<{ pathname: string }>) {
                   >
                     <span className="flex items-center justify-between gap-3">
                       {item.label}
-                      {isActive(item.href) ? <span className="h-2 w-2 rounded-full bg-primary" /> : null}
+                      {isActive(item.href) ? (
+                        <span className="h-2 w-2 rounded-full bg-primary" />
+                      ) : null}
                     </span>
                   </Link>
                 ))}
