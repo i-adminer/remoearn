@@ -1,0 +1,347 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "tailwindcss/utilities";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+  --background: #f6f9ff;
+  --foreground: #08111f;
+  --card: #ffffff;
+  --card-foreground: #08111f;
+  --popover: #ffffff;
+  --popover-foreground: #08111f;
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --secondary: #eaf1ff;
+  --secondary-foreground: #10213f;
+  --muted: #edf3fb;
+  --muted-foreground: #5d6b82;
+  --accent: #dbeafe;
+  --accent-foreground: #10213f;
+  --destructive: #dc2626;
+  --border: #d8e3f3;
+  --input: #d8e3f3;
+  --ring: #1d4ed8;
+  --chart-1: #1d4ed8;
+  --chart-2: #3b82f6;
+  --chart-3: #60a5fa;
+  --chart-4: #93c5fd;
+  --chart-5: #bfdbfe;
+  --radius: 0.625rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #08111f;
+  --sidebar-primary: #1d4ed8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #edf3fb;
+  --sidebar-accent-foreground: #08111f;
+  --sidebar-border: #d8e3f3;
+  --sidebar-ring: #1d4ed8;
+  --hero-bg-start: #ffffff;
+  --hero-bg-mid: #ffffff;
+  --hero-bg-end: #ffffff;
+  --hero-grid-track: rgba(203, 213, 225, 0.6);
+  --hero-ray-core: #3b82f6;
+  --hero-ray-glow: rgba(59, 130, 246, 0.8);
+  --hero-spot-1: transparent;
+  --hero-spot-2: transparent;
+  --scrollbar-track: rgba(255, 255, 255, 0.35);
+  --scrollbar-thumb: rgba(29, 78, 216, 0.28);
+  --scrollbar-thumb-hover: rgba(29, 78, 216, 0.44);
+}
+
+.dark {
+  --background: #050b18;
+  --foreground: #eff5ff;
+  --card: #0b1730;
+  --card-foreground: #eff5ff;
+  --popover: #0b1730;
+  --popover-foreground: #eff5ff;
+  --primary: #60a5fa;
+  --primary-foreground: #020617;
+  --secondary: #12213f;
+  --secondary-foreground: #eff5ff;
+  --muted: #10213f;
+  --muted-foreground: #9fb2d5;
+  --accent: #17284b;
+  --accent-foreground: #eff5ff;
+  --destructive: #ef4444;
+  --border: #1f335e;
+  --input: #1f335e;
+  --ring: #60a5fa;
+  --chart-1: #60a5fa;
+  --chart-2: #3b82f6;
+  --chart-3: #2563eb;
+  --chart-4: #1d4ed8;
+  --chart-5: #1e40af;
+  --sidebar: #09111f;
+  --sidebar-foreground: #eff5ff;
+  --sidebar-primary: #60a5fa;
+  --sidebar-primary-foreground: #020617;
+  --sidebar-accent: #10213f;
+  --sidebar-accent-foreground: #eff5ff;
+  --sidebar-border: #1f335e;
+  --sidebar-ring: #60a5fa;
+  --hero-bg-start: #020617;
+  --hero-bg-mid: #050b18;
+  --hero-bg-end: #020617;
+  --hero-grid-track: rgba(148, 163, 184, 0.15);
+  --hero-ray-core: #60a5fa;
+  --hero-ray-glow: rgba(96, 165, 250, 0.9);
+  --hero-spot-1: rgba(59, 130, 246, 0.16);
+  --hero-spot-2: rgba(34, 197, 94, 0.08);
+  --scrollbar-track: rgba(2, 6, 23, 0.35);
+  --scrollbar-thumb: rgba(96, 165, 250, 0.42);
+  --scrollbar-thumb-hover: rgba(96, 165, 250, 0.62);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at top, rgba(29, 78, 216, 0.14), transparent 34%),
+      linear-gradient(180deg, #f9fbff 0%, #f6f9ff 32%, #edf3fb 100%);
+    background-attachment: fixed;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+/* Grid Background */
+.grid-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--hero-bg-start) 0%,
+    var(--hero-bg-mid) 52%,
+    var(--hero-bg-end) 100%
+  );
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 30%, var(--hero-spot-1), transparent 28%),
+    radial-gradient(circle at 72% 66%, var(--hero-spot-2), transparent 18%);
+  pointer-events: none;
+}
+
+.grid-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-line {
+  position: absolute;
+  background: var(--hero-grid-track);
+  z-index: 0;
+}
+
+.grid-line.horizontal {
+  width: 100%;
+  height: 1px;
+  left: 0;
+}
+
+.grid-line.vertical {
+  width: 1px;
+  height: 100%;
+  top: 0;
+}
+
+/* Animated light effect - only on lines with 'animated' class */
+.grid-line.animated::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+}
+
+.grid-line.horizontal.animated::before {
+  width: 60px;
+  height: 1px;
+  top: 0;
+  left: -60px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hero-ray-glow) 40%,
+    var(--hero-ray-core) 100%
+  );
+  box-shadow:
+    0 0 10px var(--hero-ray-core),
+    0 0 20px var(--hero-ray-glow),
+    0 0 30px var(--hero-ray-glow);
+  animation: moveLight 8s ease-in-out infinite;
+}
+
+.grid-line.vertical.animated::before {
+  width: 1px;
+  height: 60px;
+  left: 0;
+  top: -60px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--hero-ray-glow) 40%,
+    var(--hero-ray-core) 100%
+  );
+  box-shadow:
+    0 0 10px var(--hero-ray-core),
+    0 0 20px var(--hero-ray-glow),
+    0 0 30px var(--hero-ray-glow);
+  animation: moveLightVertical 7s ease-in-out infinite;
+}
+
+/* Stagger animation delays for different lines */
+.grid-line[data-index="2"].animated::before {
+  animation-delay: 0s;
+}
+.grid-line[data-index="5"].animated::before {
+  animation-delay: 1.5s;
+}
+.grid-line[data-index="8"].animated::before {
+  animation-delay: 3s;
+}
+.grid-line[data-index="10"].animated::before {
+  animation-delay: 4.5s;
+}
+.grid-line[data-index="15"].animated::before {
+  animation-delay: 0.5s;
+}
+.grid-line[data-index="19"].animated::before {
+  animation-delay: 2s;
+}
+.grid-line[data-index="23"].animated::before {
+  animation-delay: 3.5s;
+}
+.grid-line[data-index="26"].animated::before {
+  animation-delay: 1s;
+}
+.grid-line[data-index="28"].animated::before {
+  animation-delay: 2.5s;
+}
+
+@keyframes moveLight {
+  0% {
+    left: -60px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% + 60px);
+    opacity: 0;
+  }
+}
+
+@keyframes moveLightVertical {
+  0% {
+    top: -60px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% + 60px);
+    opacity: 0;
+  }
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at top, rgba(96, 165, 250, 0.16), transparent 34%),
+    linear-gradient(180deg, #07111f 0%, #050b18 36%, #020617 100%);
+}
