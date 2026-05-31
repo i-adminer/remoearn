@@ -108,7 +108,6 @@ export default function Home() {
                     ["🇺🇸", "United States"],
                     ["🇫🇷", "France"],
                     ["🇦🇺", "Australia"],
-                    ["🇬🇧", "United Kingdom"],
                     ["🇩🇪", "Germany"],
                   ].map(([flag, label]) => (
                     <span
@@ -388,12 +387,12 @@ function FeatureTile({
             sizes="(max-width: 1280px) 100vw, 25vw"
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(3,7,18,0.14)_35%,rgba(3,7,18,0.74)_100%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(3,7,18,0.2)_35%,rgba(3,7,18,0.8)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-        <div className="max-w-md rounded-3xl border border-white/10 bg-slate-950/65 p-4 text-white backdrop-blur-md shadow-[0_18px_60px_-24px_rgba(15,23,42,0.8)]">
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <div className="w-full max-w-md rounded-3xl border border-white/10 bg-slate-950/65 p-4 text-center text-white backdrop-blur-md shadow-[0_18px_60px_-24px_rgba(15,23,42,0.8)]">
+          <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
             {title}
           </h3>
           <p className="mt-2 text-sm leading-7 text-white/80">{description}</p>
