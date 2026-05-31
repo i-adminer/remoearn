@@ -60,7 +60,7 @@ export default function Home() {
                 size="lg"
                 className="rounded-full border-slate-300 bg-white px-6 text-slate-900 hover:bg-slate-50 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
               >
-                <Link href="/remote-jobs">Explore Remote Jobs</Link>
+                <Link href="/products">Browse Products</Link>
               </Button>
             </div>
 
@@ -77,7 +77,7 @@ export default function Home() {
                 </span>
               </div>
               <span className="hidden h-4 w-px bg-slate-300/70 sm:block dark:bg-white/20" />
-              <span>1,200+ users trust the platform</span>
+              <span>47.9k+ users trust the platform</span>
             </div>
           </div>
         </PageShell>
@@ -216,62 +216,6 @@ export default function Home() {
         </PageShell>
       </section>
 
-      <section className="py-16 sm:py-20 hidden">
-        <PageShell>
-          <MarketingCard className="space-y-6 p-6 sm:p-8">
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-              <ShieldCheck className="size-4" />
-              SSL Secure Payment
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Your information is protected by 256-bit SSL
-            </h2>
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {[
-                {
-                  label: "M-Pesa",
-                  src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/M-PESA.png/250px-M-PESA.png",
-                  className: "object-contain",
-                },
-                {
-                  label: "Mastercard",
-                  src: "https://cdn.simpleicons.org/mastercard",
-                  className: "object-contain",
-                },
-                {
-                  label: "Visa",
-                  src: "https://cdn.simpleicons.org/visa",
-                  className: "object-contain",
-                },
-              ].map((method) => (
-                <div
-                  key={method.label}
-                  className="flex flex-col items-center justify-center gap-3 rounded-3xl border border-border/70 bg-background px-4 py-5 text-center shadow-sm dark:border-white/10 dark:bg-white/5"
-                >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950/5 p-2 dark:bg-white/10">
-                    <img
-                      src={method.src}
-                      alt={method.label}
-                      className={`h-full w-full ${method.className}`}
-                      loading="lazy"
-                    />
-                  </span>
-                  <p className="text-sm font-medium text-foreground dark:text-white">
-                    {method.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-sm leading-7 text-muted-foreground">
-              Secure checkout is encrypted end to end and verified before
-              release.
-            </p>
-          </MarketingCard>
-        </PageShell>
-      </section>
-
       <section className="py-16 sm:py-20">
         <PageShell>
           <MarketingCard className="relative overflow-hidden border-0 bg-[linear-gradient(135deg,#020617_0%,#1d4ed8_52%,#06b6d4_100%)] p-0 text-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.75)]">
@@ -312,31 +256,6 @@ export default function Home() {
         </PageShell>
       </section>
 
-      <section className="py-6 sm:py-10 hidden">
-        <PageShell>
-          <SectionHeading
-            eyebrow="Testimonials"
-            title="People like the clarity and premium feel"
-            description="Short, trust-building feedback that matches the clean storefront style."
-            align="center"
-          />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {testimonials.map((item) => (
-              <MarketingCard key={item.name} className="p-5">
-                <p className="text-sm leading-7 text-muted-foreground">
-                  “{item.quote}”
-                </p>
-                <div className="mt-5">
-                  <p className="font-semibold text-foreground">{item.name}</p>
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary">
-                    {item.role}
-                  </p>
-                </div>
-              </MarketingCard>
-            ))}
-          </div>
-        </PageShell>
-      </section>
 
       <section id="faq" className="py-16 sm:py-20">
         <PageShell>

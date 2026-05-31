@@ -101,7 +101,6 @@ export type MarketingPage = {
 
 export const navigation: NavigationItem[] = [
   { label: "Home", href: "/" },
-  { label: "Remote Jobs", href: "/remote-jobs" },
   { label: "Proxy Services", href: "/#proxy-services" },
   { label: "Contact Us", href: "/contact" },
 ];
@@ -109,7 +108,6 @@ export const navigation: NavigationItem[] = [
 export const footerLinks: NavigationItem[] = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
-  { label: "Remote Jobs", href: "/remote-jobs" },
   { label: "Proxy Services", href: "/#proxy-services" },
   { label: "FAQ", href: "/#faq" },
   { label: "Contact Us", href: "/contact" },
