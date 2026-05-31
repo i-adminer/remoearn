@@ -12,7 +12,7 @@ export default function SiteLayout({
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip">
       <SiteHeader />
-      <main className="relative flex-1">{children}</main>
+      <main className="relative flex-1 pt-16">{children}</main>
       <SiteFooter />
       <FloatingCart />
     </div>
