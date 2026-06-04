@@ -1,32 +1,19 @@
 "use client";
 
 import { type LucideIcon, Mail, MessageSquareText, PhoneCall, Send } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { MarketingCard } from "@/components/site/marketing-card";
+import { submitContactForm } from "@/lib/actions/contact";
 
-const supportEmail = "support@remoearn.com";
+const supportEmail = "info@remoearn.com";
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    const subject = String(formData.get("subject") ?? "");
-    const name = String(formData.get("name") ?? "");
-    const email = String(formData.get("email") ?? "");
-    const message = String(formData.get("message") ?? "");
-
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\n${message}`,
-    );
-
-    window.location.href = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
-    setSubmitted(true);
-  }
+  const [state, formAction, pending] = useActionState(
+    async (_: any, formData: FormData) => submitContactForm(formData),
+    undefined
+  );
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">

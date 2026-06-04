@@ -25,7 +25,22 @@ interface Product {
   type: ProductType;
 }
 
-function buildProducts(): Product[] {
+function buildProducts(dbProducts?: any[]): Product[] {
+  if (dbProducts && dbProducts.length > 0) {
+    return dbProducts.map((p) => ({
+      id: p._id,
+      slug: p.slug,
+      title: p.title,
+      category: p.category || (p.type === 'pdf' ? 'PDF Guide' : 'Proxy Service'),
+      price: `$${p.price}`,
+      priceCents: Math.round(p.price * 100),
+      description: p.description,
+      image: p.images?.[0] || (p.type === 'pdf' ? undefined : 'https://firstsiteguide.com/wp-content/uploads/2022/08/proxy-server.png'),
+      highlights: p.tags || [],
+      type: p.type,
+    }));
+  }
+
   const pdfs = featuredProducts.map((p) => ({
     id: `pdf-${p.slug}`,
     slug: p.slug,
@@ -59,14 +74,15 @@ const proxies = proxyPlans.map((p) => ({
 
 const allProducts = buildProducts();
 
-export function ShopStudio() {
+export function ShopStudio({ products: dbProducts }: { products?: any[] }) {
+  const productsToUse = dbProducts && dbProducts.length > 0 ? buildProducts(dbProducts) : allProducts;
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<"all" | ProductType>("all");
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
   const { addItem, items } = useCartStore();
 
   const filtered = useMemo(() => {
-    let result = allProducts;
+    let result = productsToUse;
 
     if (search) {
       const q = search.toLowerCase();

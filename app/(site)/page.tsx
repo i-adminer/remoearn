@@ -16,6 +16,7 @@ import {
   faqItems,
   proxyPlans,
 } from "@/lib/site-content";
+import { getActiveProxyCards } from "@/lib/actions/proxy-cards";
 
 export const metadata = {
   title:
@@ -24,7 +25,25 @@ export const metadata = {
     "RemoEarn helps people worldwide discover legitimate ways to make money online remotely. Access premium PDF guides, remote job websites, online earning strategies, verified job links, proxy solutions, and digital resources for freelancers, remote workers, and online entrepreneurs.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const proxyCards = await getActiveProxyCards();
+  const displayPlans =
+    proxyCards.length > 0
+      ? proxyCards.map(
+          (card) =>
+            ({
+              name: card.title,
+              price: card.price,
+              description: card.description,
+              features: card.features,
+              href: card.affiliateLink,
+              buttonLabel: card.buttonText,
+              badge: card.title,
+              locations: [],
+            }) as any,
+        )
+      : proxyPlans;
+
   return (
     <>
       <section className="relative -mt-24 min-h-[100svh] overflow-hidden pt-24 sm:-mt-28 sm:pt-28">
@@ -178,13 +197,20 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="mt-4 sm:mt-5 flex gap-2 sm:gap-3">
-                    <Button asChild className="flex-1 rounded-full text-xs sm:text-sm h-9 sm:h-10">
-                      <Link href={`/products/${product.slug}`}>
-                        View
-                      </Link>
+                    <Button
+                      asChild
+                      className="flex-1 rounded-full text-xs sm:text-sm h-9 sm:h-10"
+                    >
+                      <Link href={`/products/${product.slug}`}>View</Link>
                     </Button>
-                    <Button asChild variant="outline" className="rounded-full text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4">
-                      <Link href={`/checkout?product=${product.slug}`}>Buy</Link>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-full text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4"
+                    >
+                      <Link href={`/checkout?product=${product.slug}`}>
+                        Buy
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -194,7 +220,10 @@ export default function Home() {
         </PageShell>
       </section>
 
-      <section id="proxy-services" className="bg-[linear-gradient(180deg,#2563eb_0%,#1d4ed8_55%,#1e40af_100%)] py-16 text-white sm:py-20 dark:bg-[linear-gradient(180deg,#0f172a_0%,#1e3a8a_55%,#1d4ed8_100%)]">
+      <section
+        id="proxy-services"
+        className="bg-[linear-gradient(180deg,#2563eb_0%,#1d4ed8_55%,#1e40af_100%)] py-16 text-white sm:py-20 dark:bg-[linear-gradient(180deg,#0f172a_0%,#1e3a8a_55%,#1d4ed8_100%)]"
+      >
         <PageShell>
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/75">
@@ -209,7 +238,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {proxyPlans.map((plan) => (
+            {displayPlans.map((plan) => (
               <ProxyPricingCard key={plan.name} plan={plan} />
             ))}
           </div>
@@ -255,7 +284,6 @@ export default function Home() {
           </MarketingCard>
         </PageShell>
       </section>
-
 
       <section id="faq" className="py-16 sm:py-20">
         <PageShell>

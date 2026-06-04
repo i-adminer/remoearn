@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { ShopStudio } from "@/components/site/shop-studio";
 import { PageShell } from "@/components/site/page-shell";
+import { getPublishedProducts } from "@/lib/actions/products";
 
 export const metadata: Metadata = {
   title: "Shop Digital Products & Proxy Services | RemoEarn",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
     "Browse digital PDF guides and proxy subscriptions. Buy remote work guides, freelancing resources, and proxy plans with instant delivery.",
 };
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const dbProducts = await getPublishedProducts();
+
   return (
     <div className="overflow-x-clip pb-24">
       <section className="relative pt-10 sm:pt-14">
@@ -33,7 +36,7 @@ export default function ShopPage() {
       </section>
 
       <PageShell className="mt-10">
-        <ShopStudio />
+        <ShopStudio products={dbProducts} />
       </PageShell>
     </div>
   );

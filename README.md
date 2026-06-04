@@ -1,36 +1,186 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RemoEarn - Remote Income Platform
 
-## Getting Started
+A serverless Next.js application for selling digital products and proxy services with MongoDB Atlas, admin dashboard, and integrated payment solutions.
 
-First, run the development server:
+## Features
+
+- ✅ **MongoDB Atlas Integration** - Serverless database with full CRUD operations
+- ✅ **Admin Authentication** - Secure login with JWT session management and password updates
+- ✅ **Proxy Card Management** - Create and manage proxy service cards with affiliate links
+- ✅ **Product Management** - Full CRUD for PDF and proxy products with image support
+- ✅ **Contact Form** - Nodemailer integration with Zoho SMTP for email delivery
+- ✅ **Dynamic Content** - Homepage and shop fetch data from MongoDB
+- ✅ **Cloudinary Ready** - Media upload utility configured
+- 🚧 **Payment Integration** - Stripe and M-Pesa support (coming soon)
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Database**: MongoDB Atlas
+- **Authentication**: JWT with httpOnly cookies
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Radix UI + shadcn/ui
+- **Media Storage**: Cloudinary
+- **Email**: Nodemailer + Zoho
+
+## Setup
+
+### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local` and fill in your credentials:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+Required variables:
+- `MONGODB_URI` - Your MongoDB Atlas connection string
+- `SESSION_SECRET` - Random 32+ character string for JWT signing
+- `ADMIN_EMAIL` - Initial admin email
+- `ADMIN_INITIAL_PASSWORD` - Initial admin password
+- `CLOUDINARY_*` - Your Cloudinary credentials
+- `SMTP_*` - Your Zoho SMTP credentials
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Seed Admin User
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm tsx lib/db/seed-admin.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This creates the initial admin user with credentials from your `.env.local`.
 
-## Deploy on Vercel
+### 4. Run Development Server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) to see the site.
+
+## Admin Dashboard
+
+Access the admin dashboard at `/admin/login`:
+
+1. Login with your admin credentials
+2. Navigate through:
+   - **Overview** - Dashboard statistics
+   - **Proxy Cards** - Manage homepage proxy service cards
+   - **Products** - Manage PDF and proxy products (WIP)
+   - **Messages** - View contact form submissions (WIP)
+   - **Settings** - Update your password
+
+### Proxy Cards
+
+Create proxy service cards that appear on the homepage:
+
+1. Go to **Dashboard > Proxy Cards**
+2. Click **New Card**
+3. Fill in:
+   - Title, Price, Description
+   - Features (one per line)
+   - Front/Back image URLs (optional)
+   - Affiliate link (required)
+   - Button text
+   - Display order
+
+Cards can be toggled active/inactive and will automatically show on the homepage.
+
+## Project Structure
+
+```
+app/
+├── (site)/                 # Public-facing pages
+│   ├── page.tsx           # Homepage
+│   ├── shop/              # Product listing
+│   └── products/          # Product details
+├── (dashboard)/           # Protected admin area
+│   └── dashboard/
+│       ├── page.tsx       # Dashboard overview
+│       ├── proxy-cards/   # Proxy card management
+│       ├── products/      # Product management (WIP)
+│       ├── messages/      # Contact messages (WIP)
+│       └── settings/      # Admin settings
+└── admin/
+    └── login/             # Admin login page
+
+components/
+├── admin/                 # Admin-specific components
+│   ├── login-form.tsx
+│   ├── proxy-card-form.tsx
+│   └── proxy-cards-list.tsx
+├── site/                  # Public site components
+└── ui/                    # Reusable UI components
+
+lib/
+├── mongodb.ts             # MongoDB connection
+├── db/
+│   ├── mongodb-schema.ts  # TypeScript schemas
+│   └── seed-admin.ts      # Admin seeding script
+├── auth/
+│   ├── session.ts         # Session management
+│   └── actions.ts         # Auth server actions
+└── actions/
+    └── proxy-cards.ts     # Proxy card CRUD actions
+```
+
+## MongoDB Collections
+
+### `admins`
+- email, password (bcrypt hashed)
+- createdAt, updatedAt
+
+### `proxy_cards`
+- title, price, description
+- features (array)
+- frontImageUrl, backImageUrl
+- affiliateLink, buttonText
+- isActive, order
+- createdAt, updatedAt
+
+### `contact_messages` (WIP)
+- name, email, subject, message
+- isRead, readAt
+- createdAt
+
+### `products` (WIP)
+- type: 'pdf' | 'proxy'
+- title, slug, description, price
+- images (array, max 3)
+- pdfUrl (PDF products only)
+- affiliateLink (proxy products only)
+- isPublished, category, tags
+- createdAt, updatedAt
+
+## Security
+
+- **Authentication**: JWT tokens stored in httpOnly cookies
+- **Password Hashing**: bcrypt with salt rounds
+- **Session Management**: 7-day expiration with automatic cleanup
+- **Protected Routes**: Server-side authentication checks
+- **CSRF Protection**: Built-in Next.js protection
+
+## Development Workflow
+
+1. **Database Changes**: Update `lib/db/mongodb-schema.ts`
+2. **New Features**: Create server actions in `lib/actions/`
+3. **Admin Pages**: Add to `app/(dashboard)/dashboard/`
+4. **Components**: Organize in `components/admin/` or `components/site/`
+
+## TODO
+
+- [ ] Stripe payment integration
+- [ ] M-Pesa payment integration
+- [ ] Order management
+- [ ] Download tokens for digital products
+- [ ] Email templates for order confirmations
+- [ ] Customer dashboard
+
+## License
+
+Private project - All rights reserved
