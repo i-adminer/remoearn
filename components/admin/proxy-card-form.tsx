@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useActionState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { createProxyCard, updateProxyCard } from '@/lib/actions/proxy-cards';
+import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { createProxyCard, updateProxyCard } from "@/lib/actions/proxy-cards";
 
 interface ProxyCardFormProps {
   card?: {
@@ -22,13 +22,13 @@ interface ProxyCardFormProps {
 
 export function ProxyCardForm({ card }: ProxyCardFormProps) {
   const router = useRouter();
-  const action = card 
+  const action = card
     ? async (_: any, formData: FormData) => updateProxyCard(card._id, formData)
     : async (_: any, formData: FormData) => createProxyCard(formData);
   const [state, formAction, pending] = useActionState(action, undefined);
 
   if (state?.success) {
-    router.push('/dashboard/proxy-cards');
+    router.push("/dashboard/proxy-cards");
   }
 
   return (
@@ -74,10 +74,12 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Features (one per line) *</label>
+        <label className="block text-sm font-medium mb-1">
+          Features (one per line) *
+        </label>
         <textarea
           name="features"
-          defaultValue={card?.features.join('\n')}
+          defaultValue={card?.features.join("\n")}
           required
           rows={5}
           placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
@@ -85,9 +87,11 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
         />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="block text-sm font-medium mb-1">Front Image URL</label>
+      <div className=" gap-4 sm:grid-cols-2 hidden">
+        <div className="hidden">
+          <label className="block text-sm font-medium mb-1">
+            Front Image URL
+          </label>
           <input
             name="frontImageUrl"
             type="url"
@@ -96,8 +100,10 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Back Image URL</label>
+        <div className="hidden">
+          <label className="block text-sm font-medium mb-1">
+            Back Image URL
+          </label>
           <input
             name="backImageUrl"
             type="url"
@@ -108,7 +114,9 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Affiliate Link *</label>
+        <label className="block text-sm font-medium mb-1">
+          Affiliate Link *
+        </label>
         <input
           name="affiliateLink"
           type="url"
@@ -121,16 +129,18 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium mb-1">Button Text *</label>
+          <label className="block text-sm font-medium mb-1">
+            Button Text *
+          </label>
           <input
             name="buttonText"
-            defaultValue={card?.buttonText || 'Get Proxy'}
+            defaultValue={card?.buttonText || "Get Proxy"}
             required
             className="w-full rounded-md border px-3 py-2 dark:bg-slate-900"
           />
         </div>
 
-        <div>
+        <div className="hidden">
           <label className="block text-sm font-medium mb-1">Order</label>
           <input
             name="order"
@@ -143,13 +153,9 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
 
       <div className="flex gap-3 pt-4">
         <Button type="submit" disabled={pending}>
-          {pending ? 'Saving...' : card ? 'Update Card' : 'Create Card'}
+          {pending ? "Saving..." : card ? "Update Card" : "Create Card"}
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.back()}
-        >
+        <Button type="button" variant="outline" onClick={() => router.back()}>
           Cancel
         </Button>
       </div>
