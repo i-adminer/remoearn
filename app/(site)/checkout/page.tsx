@@ -53,8 +53,13 @@ export default function CheckoutPage() {
 
   async function handlePayment(e: React.FormEvent) {
     e.preventDefault();
-    
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
+
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.phone
+    ) {
       setError("Please fill in all fields");
       return;
     }
@@ -68,7 +73,7 @@ export default function CheckoutPage() {
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
-        items: items.map(item => ({
+        items: items.map((item) => ({
           id: item.id,
           title: item.title,
           type: item.type,
@@ -116,8 +121,10 @@ export default function CheckoutPage() {
             <form onSubmit={handlePayment} className="space-y-6">
               {/* Customer Information */}
               <div className="bg-card border rounded-lg p-6">
-                <h2 className="text-lg font-semibold mb-4">Customer Information</h2>
-                
+                <h2 className="text-lg font-semibold mb-4">
+                  Customer Information
+                </h2>
+
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -127,7 +134,12 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         value={formData.firstName}
-                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            firstName: e.target.value,
+                          })
+                        }
                         className="w-full px-3 py-2 border rounded-md bg-background"
                         placeholder="Wanjiru"
                         required
@@ -140,7 +152,9 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         value={formData.lastName}
-                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, lastName: e.target.value })
+                        }
                         className="w-full px-3 py-2 border rounded-md bg-background"
                         placeholder="Kamau"
                         required
@@ -155,7 +169,9 @@ export default function CheckoutPage() {
                     <input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       className="w-full px-3 py-2 border rounded-md bg-background"
                       placeholder="wanjiru@example.com"
                       required
@@ -170,7 +186,7 @@ export default function CheckoutPage() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '');
+                        const value = e.target.value.replace(/\D/g, "");
                         setFormData({ ...formData, phone: value });
                       }}
                       className="w-full px-3 py-2 border rounded-md bg-background"
@@ -260,7 +276,7 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-3">
                     {item.image && (
-                      <div className="relative size-16 rounded-md overflow-hidden bg-secondary flex-shrink-0">
+                      <div className="relative size-16 rounded-md overflow-hidden bg-secondary shrink-0">
                         <Image
                           src={item.image}
                           alt={item.title}
@@ -276,9 +292,7 @@ export default function CheckoutPage() {
                       <p className="text-xs text-muted-foreground">
                         {item.type === "pdf" ? "PDF Guide" : "Proxy Service"}
                       </p>
-                      <p className="text-sm font-semibold mt-1">
-                        {item.price}
-                      </p>
+                      <p className="text-sm font-semibold mt-1">{item.price}</p>
                     </div>
                   </div>
                 ))}
