@@ -41,25 +41,25 @@ export function ProxyCardsList({ cards }: { cards: ProxyCard[] }) {
       {cards.map((card) => (
         <div
           key={card._id}
-          className="flex items-center justify-between rounded-lg border border-border/60 bg-card p-4 transition-colors hover:border-border"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-lg border border-border/60 bg-card p-4 gap-3 transition-colors hover:border-border"
         >
           <div className="flex-1 min-w-0">
             <h3 className="font-medium truncate">{card.title}</h3>
             <p className="text-sm text-muted-foreground mt-0.5">{card.price}</p>
           </div>
-          <div className="flex items-center gap-2 ml-4">
-            <span className={`px-2 py-1 text-xs font-medium rounded-md ${card.isActive ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'}`}>
+          <div className="flex items-center gap-2 sm:ml-4">
+            <span className={`px-2 py-1 text-xs font-medium rounded-md whitespace-nowrap ${card.isActive ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'}`}>
               {card.isActive ? 'Active' : 'Inactive'}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleToggle(card._id)}
-              className="size-8 p-0"
+              className="size-8 p-0 shrink-0"
             >
               {card.isActive ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </Button>
-            <Button variant="ghost" size="sm" asChild className="size-8 p-0">
+            <Button variant="ghost" size="sm" asChild className="size-8 p-0 shrink-0">
               <Link href={`/dashboard/proxy-cards/${card._id}`}>
                 <Edit className="size-4" />
               </Link>
@@ -68,7 +68,7 @@ export function ProxyCardsList({ cards }: { cards: ProxyCard[] }) {
               variant="ghost"
               size="sm"
               onClick={() => handleDelete(card._id)}
-              className="size-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+              className="size-8 p-0 shrink-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
             >
               <Trash2 className="size-4" />
             </Button>

@@ -40,26 +40,26 @@ export function ProductsList({ products }: { products: Product[] }) {
   return (
     <div className="space-y-3">
       {products.map((p) => (
-        <div key={p._id} className="flex items-center justify-between rounded-lg border border-border/60 bg-card p-4 transition-colors hover:border-border">
+        <div key={p._id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-lg border border-border/60 bg-card p-4 gap-3 transition-colors hover:border-border">
           <div className="flex-1 min-w-0">
             <h3 className="font-medium truncate">{p.title}</h3>
             <p className="text-sm text-muted-foreground mt-0.5">
               {p.price} • {p.category}
             </p>
           </div>
-          <div className="flex items-center gap-2 ml-4">
-            <span className={`px-2 py-1 text-xs font-medium rounded-md ${p.isPublished ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'}`}>
+          <div className="flex items-center gap-2 sm:ml-4">
+            <span className={`px-2 py-1 text-xs font-medium rounded-md whitespace-nowrap ${p.isPublished ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'}`}>
               {p.isPublished ? 'Published' : 'Draft'}
             </span>
-            <Button variant="ghost" size="sm" onClick={() => handleToggle(p._id)} className="size-8 p-0">
+            <Button variant="ghost" size="sm" onClick={() => handleToggle(p._id)} className="size-8 p-0 shrink-0">
               {p.isPublished ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </Button>
-            <Button variant="ghost" size="sm" asChild className="size-8 p-0">
+            <Button variant="ghost" size="sm" asChild className="size-8 p-0 shrink-0">
               <Link href={`/dashboard/products/${p._id}`}>
                 <Edit className="size-4" />
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => handleDelete(p._id)} className="size-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
+            <Button variant="ghost" size="sm" onClick={() => handleDelete(p._id)} className="size-8 p-0 shrink-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
               <Trash2 className="size-4" />
             </Button>
           </div>
