@@ -32,7 +32,7 @@ export function ProxyCardForm({ card }: ProxyCardFormProps) {
   }
 
   return (
-    <form action={formAction} className="space-y-4 max-w-2xl">
+    <form action={formAction} className="space-y-4 max-w-2xl mb-20">
       {state?.error && (
         <div className="rounded-md bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
           {state.error}
