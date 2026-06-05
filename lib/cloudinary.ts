@@ -6,13 +6,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function uploadToCloudinary(file: File, folder: string) {
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  return new Promise((resolve, reject) => {
+export async function uploadToCloudinary(buffer: Buffer, resourceType: 'image' | 'raw' = 'image') {
+  return new Promise<any>((resolve, reject) => {
     cloudinary.uploader.upload_stream(
-      { folder, resource_type: 'auto' },
+      { 
+        folder: 'remoearn',
+        resource_type: resourceType === 'raw' ? 'raw' : 'image'
+      },
       (error, result) => {
         if (error) reject(error);
         else resolve(result);

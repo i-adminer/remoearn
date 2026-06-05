@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 export default async function ShopPage() {
   const dbProducts = await getPublishedProducts();
+  const hasProducts = dbProducts && dbProducts.length > 0;
 
   return (
     <div className="overflow-x-clip pb-24">
@@ -36,7 +37,7 @@ export default async function ShopPage() {
       </section>
 
       <PageShell className="mt-10">
-        <ShopStudio products={dbProducts} />
+        <ShopStudio products={hasProducts ? dbProducts : undefined} />
       </PageShell>
     </div>
   );

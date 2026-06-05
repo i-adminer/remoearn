@@ -1,57 +1,35 @@
 "use client";
 
-import { ShoppingCart, Check } from "lucide-react";
-import { useState } from "react";
-
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/lib/cart";
-import { cn } from "@/lib/utils";
 
-type Product = {
-  id: string;
-  slug: string;
-  title: string;
-  category: string;
-  price: string;
-  priceCents: number;
-  image?: string;
-  type: "pdf" | "proxy";
-};
-
-export function AddToCartButton({ product }: { product: Product }) {
-  const { addItem, items } = useCartStore();
-  const [added, setAdded] = useState(false);
-
-  const isInCart = items.some((i) => i.id === product.id);
-
-  const handleAdd = () => {
-    addItem(product);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+interface AddToCartButtonProps {
+  product: {
+    id: string;
+    slug: string;
+    title: string;
+    category: string;
+    price: string;
+    priceCents: number;
+    image?: string;
+    type: 'pdf' | 'proxy';
   };
+}
+
+export function AddToCartButton({ product }: AddToCartButtonProps) {
+  const { addItem, isInCart } = useCartStore();
+  const inCart = isInCart(product.id);
 
   return (
     <Button
-      onClick={handleAdd}
-      disabled={isInCart || added}
       size="lg"
-      className={cn(
-        "gap-2 rounded-full px-6",
-        isInCart && "bg-green-600 hover:bg-green-700",
-        added && "bg-green-600 hover:bg-green-700"
-      )}
+      className="rounded-full"
+      onClick={() => addItem(product)}
+      disabled={inCart}
     >
-      {isInCart || added ? (
-        <>
-          <Check className="size-5" />
-          {added ? "Added to Cart" : "In Cart"}
-        </>
-      ) : (
-        <>
-          <ShoppingCart className="size-5" />
-          Add to Cart
-        </>
-      )}
+      <ShoppingCart className="mr-2 size-5" />
+      {inCart ? "In Cart" : "Add to Cart"}
     </Button>
   );
 }

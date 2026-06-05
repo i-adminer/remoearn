@@ -33,6 +33,8 @@ export type ProxyPlan = {
   description: string;
   locations: string[];
   features: string[];
+  href?: string;
+  buttonLabel?: string;
 };
 
 type PageSection =

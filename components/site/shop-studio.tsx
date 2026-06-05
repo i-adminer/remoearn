@@ -31,12 +31,12 @@ function buildProducts(dbProducts?: any[]): Product[] {
       id: p._id,
       slug: p.slug,
       title: p.title,
-      category: p.category || (p.type === 'pdf' ? 'PDF Guide' : 'Proxy Service'),
-      price: `$${p.price}`,
-      priceCents: Math.round(p.price * 100),
+      category: p.category,
+      price: p.price,
+      priceCents: p.priceCents,
       description: p.description,
-      image: p.images?.[0] || (p.type === 'pdf' ? undefined : 'https://firstsiteguide.com/wp-content/uploads/2022/08/proxy-server.png'),
-      highlights: p.tags || [],
+      image: p.image,
+      highlights: p.highlights || [],
       type: p.type,
     }));
   }
@@ -75,7 +75,11 @@ const proxies = proxyPlans.map((p) => ({
 const allProducts = buildProducts();
 
 export function ShopStudio({ products: dbProducts }: { products?: any[] }) {
-  const productsToUse = dbProducts && dbProducts.length > 0 ? buildProducts(dbProducts) : allProducts;
+  // Use DB products if available, otherwise fallback to static products
+  const productsToUse = useMemo(() => {
+    return dbProducts && dbProducts.length > 0 ? buildProducts(dbProducts) : allProducts;
+  }, [dbProducts]);
+  
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<"all" | ProductType>("all");
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
@@ -191,41 +195,37 @@ function ProductCard({
   isInCart: boolean;
 }) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all hover:shadow-md">
-      <Link href={product.type === "pdf" ? `/products/${product.slug}` : "#"}>
-        <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden bg-secondary">
-          {product.image ? (
-            <Image
-              src={product.image}
-              alt={product.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <Globe className="size-12 text-primary/40" />
-            </div>
-          )}
-          <div className="absolute left-2 top-2 sm:left-3 sm:top-3">
-            <span className="inline-flex items-center gap-1 rounded-full bg-background/90 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-medium backdrop-blur">
-              {product.type === "pdf" ? (
-                <FileText className="size-3.5" />
-              ) : (
-                <Globe className="size-3.5" />
-              )}
-              {product.category}
-            </span>
+    <Link href={`/shop/${product.slug}`} className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all hover:shadow-md">
+      <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden bg-secondary">
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <Globe className="size-12 text-primary/40" />
           </div>
+        )}
+        <div className="absolute left-2 top-2 sm:left-3 sm:top-3">
+          <span className="inline-flex items-center gap-1 rounded-full bg-background/90 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-medium backdrop-blur">
+            {product.type === "pdf" ? (
+              <FileText className="size-3.5" />
+            ) : (
+              <Globe className="size-3.5" />
+            )}
+            {product.category}
+          </span>
         </div>
-      </Link>
+      </div>
 
       <div className="flex flex-1 flex-col p-2.5 sm:p-4">
-        <Link href={product.type === "pdf" ? `/products/${product.slug}` : "#"}>
-          <h3 className="text-sm sm:text-base font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-1">
-            {product.title}
-          </h3>
-        </Link>
+        <h3 className="text-sm sm:text-base font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-1">
+          {product.title}
+        </h3>
         <p className="mt-1 line-clamp-2 text-xs sm:text-sm text-muted-foreground">
           {product.description}
         </p>
@@ -245,7 +245,10 @@ function ProductCard({
           <span className="text-sm sm:text-lg font-bold">{product.price}</span>
           <Button
             size="sm"
-            onClick={onAddToCart}
+            onClick={(e) => {
+              e.preventDefault();
+              onAddToCart();
+            }}
             disabled={isInCart}
             className={cn(
               "gap-1 text-xs px-2 sm:px-3",
@@ -257,6 +260,6 @@ function ProductCard({
           </Button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

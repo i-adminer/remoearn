@@ -15,8 +15,9 @@ type ProxyPricingCardProps = {
 
 export function ProxyPricingCard({ plan }: Readonly<ProxyPricingCardProps>) {
   const [flipped, setFlipped] = useState(false);
-  const actionHref = plan.price === "Contact sales" ? "/contact" : "/products/proxy-setup-toolkit";
-  const actionLabel = plan.price === "Contact sales" ? "Talk to Sales" : "Get Proxy";
+  const actionHref = plan.href || (plan.price === "Contact sales" ? "/contact" : "/products/proxy-setup-toolkit");
+  const actionLabel = plan.buttonLabel || (plan.price === "Contact sales" ? "Talk to Sales" : "Get Proxy");
+  const isExternal = actionHref.startsWith('http');
 
   return (
     <div
@@ -100,7 +101,11 @@ export function ProxyPricingCard({ plan }: Readonly<ProxyPricingCardProps>) {
               <p className="text-sm font-semibold text-primary dark:text-sky-200">{plan.price}</p>
               <div onClick={(event) => event.stopPropagation()}>
                 <Button asChild className="rounded-full px-5">
-                  <Link href={actionHref}>{actionLabel}</Link>
+                  {isExternal ? (
+                    <a href={actionHref} target="_blank" rel="noopener noreferrer">{actionLabel}</a>
+                  ) : (
+                    <Link href={actionHref}>{actionLabel}</Link>
+                  )}
                 </Button>
               </div>
             </div>

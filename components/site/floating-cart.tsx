@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingCart, X, Trash2 } from "lucide-react";
 import { useCartStore, type CartItem } from "@/lib/cart";
@@ -9,10 +9,15 @@ import { cn } from "@/lib/utils";
 
 export function FloatingCart() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { items, removeItem, getTotal, getCount } = useCartStore();
   const count = getCount();
 
-  if (count === 0) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || count === 0) return null;
 
   return (
     <>

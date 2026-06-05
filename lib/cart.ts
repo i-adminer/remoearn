@@ -21,6 +21,7 @@ type CartState = {
   clearCart: () => void;
   getTotal: () => number;
   getCount: () => number;
+  isInCart: (id: string) => boolean;
 };
 
 export const useCartStore = create<CartState>()(
@@ -45,6 +46,7 @@ export const useCartStore = create<CartState>()(
         return get().items.reduce((sum, item) => sum + item.priceCents, 0) / 100;
       },
       getCount: () => get().items.length,
+      isInCart: (id) => get().items.some((item) => item.id === id),
     }),
     {
       name: "remoearn-cart",

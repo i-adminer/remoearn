@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { CreditCard, Mail, Package, BarChart3 } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { Collections } from '@/lib/db/mongodb-schema';
@@ -41,6 +42,7 @@ export default async function DashboardPage() {
           value={stats.proxyCards}
           iconColor="text-blue-500"
           bgColor="bg-blue-500/10"
+          href="/dashboard/proxy-cards"
         />
         <StatCard
           icon={Package}
@@ -48,6 +50,7 @@ export default async function DashboardPage() {
           value={stats.products}
           iconColor="text-green-500"
           bgColor="bg-green-500/10"
+          href="/dashboard/products"
         />
         <StatCard
           icon={Mail}
@@ -55,6 +58,7 @@ export default async function DashboardPage() {
           value={stats.messages}
           iconColor="text-purple-500"
           bgColor="bg-purple-500/10"
+          href="/dashboard/messages"
         />
         <StatCard
           icon={BarChart3}
@@ -62,6 +66,7 @@ export default async function DashboardPage() {
           value={stats.unreadMessages}
           iconColor="text-orange-500"
           bgColor="bg-orange-500/10"
+          href="/dashboard/messages"
         />
       </div>
 
@@ -78,15 +83,16 @@ export default async function DashboardPage() {
   );
 }
 
-function StatCard({ icon: Icon, label, value, iconColor, bgColor }: {
+function StatCard({ icon: Icon, label, value, iconColor, bgColor, href }: {
   icon: any;
   label: string;
   value: number;
   iconColor: string;
   bgColor: string;
+  href: string;
 }) {
   return (
-    <div className="rounded-lg border border-border/70 bg-card p-4">
+    <Link href={href} className="block rounded-lg border border-border/70 bg-card p-4 transition-colors hover:bg-accent/50">
       <div className="flex items-center gap-3">
         <div className={`flex size-10 items-center justify-center rounded-lg ${bgColor}`}>
           <Icon className={`size-5 ${iconColor}`} />
@@ -96,6 +102,6 @@ function StatCard({ icon: Icon, label, value, iconColor, bgColor }: {
           <p className="text-xs text-muted-foreground">{label}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -42,18 +42,49 @@ export interface ContactMessage {
 export interface Product {
   _id?: ObjectId;
   type: 'pdf' | 'proxy';
-  title: string;
   slug: string;
+  title: string;
+  category: string;
+  price: string; // Display price (e.g., "KSh 999")
+  priceCents: number; // Price in cents for calculations
   description: string;
-  price: number;
-  images: string[]; // Up to 3 images for PDFs
+  image: string; // Primary/cover image
+  images: string[]; // All images (max 3)
+  highlights: string[]; // Key features/highlights
   pdfUrl?: string; // Only for PDF type
   affiliateLink?: string; // Only for proxy type
   isPublished: boolean;
-  category?: string;
   tags?: string[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+// Order
+export interface Order {
+  _id?: ObjectId;
+  orderId: string; // Unique order identifier
+  customerName: string;
+  email: string;
+  phone: string;
+  items: OrderItem[];
+  totalAmount: number; // In cents
+  paymentMethod: 'paystack';
+  paymentStatus: 'pending' | 'completed' | 'failed';
+  transactionId?: string;
+  paystackReference?: string;
+  deliveredAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface OrderItem {
+  productId: string;
+  title: string;
+  type: 'pdf' | 'proxy';
+  price: string;
+  priceCents: number;
+  pdfUrl?: string;
+  downloadToken?: string;
 }
 
 // Collection names
@@ -62,4 +93,5 @@ export const Collections = {
   PROXY_CARDS: 'proxy_cards',
   CONTACT_MESSAGES: 'contact_messages',
   PRODUCTS: 'products',
+  ORDERS: 'orders',
 } as const;

@@ -9,7 +9,8 @@ interface Product {
   _id: string;
   type: 'pdf' | 'proxy';
   title: string;
-  price: number;
+  price: string;
+  category: string;
   isPublished: boolean;
 }
 
@@ -43,7 +44,7 @@ export function ProductsList({ products }: { products: Product[] }) {
           <div className="flex-1 min-w-0">
             <h3 className="font-medium truncate">{p.title}</h3>
             <p className="text-sm text-muted-foreground mt-0.5">
-              ${p.price} • {p.type.toUpperCase()}
+              {p.price} • {p.category}
             </p>
           </div>
           <div className="flex items-center gap-2 ml-4">

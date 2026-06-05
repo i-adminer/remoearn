@@ -63,7 +63,8 @@ function buildProxyItems(): CatalogItem[] {
     subtitle: plan.badge,
     description: plan.description,
     price: plan.price,
-    priceValue: plan.price === "Contact sales" ? null : parseKshPrice(plan.price),
+    priceValue:
+      plan.price === "Contact sales" ? null : parseKshPrice(plan.price),
     details: plan.features,
     billing: plan.price === "Contact sales" ? "custom" : "monthly",
   }));
@@ -78,13 +79,17 @@ export function ProxyServicesStudio() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<(typeof paymentMethods)[number]>("M-Pesa");
+  const [paymentMethod, setPaymentMethod] =
+    useState<(typeof paymentMethods)[number]>("M-Pesa");
   const [checkoutNote, setCheckoutNote] = useState<string | null>(null);
 
   const catalogItems = mode === "pdfs" ? pdfItems : proxyItems;
 
   const totals = useMemo(() => {
-    const numericTotal = cart.reduce((sum, item) => sum + (item.priceValue ?? 0), 0);
+    const numericTotal = cart.reduce(
+      (sum, item) => sum + (item.priceValue ?? 0),
+      0,
+    );
     const hasCustomItem = cart.some((item) => item.priceValue === null);
 
     return {
@@ -96,7 +101,11 @@ export function ProxyServicesStudio() {
   function addToCart(item: CatalogItem) {
     setCheckoutNote(null);
     setCart((current) => {
-      if (current.some((entry) => entry.slug === item.slug && entry.kind === item.kind)) {
+      if (
+        current.some(
+          (entry) => entry.slug === item.slug && entry.kind === item.kind,
+        )
+      ) {
         return current;
       }
 
@@ -110,12 +119,18 @@ export function ProxyServicesStudio() {
 
   function handleCheckoutSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setCheckoutNote("Checkout details saved. Payment wiring will connect later.");
+    setCheckoutNote(
+      "Checkout details saved. Payment wiring will connect later.",
+    );
   }
 
   const totalLabel = totals.hasCustomItem
     ? "Custom quote"
-    : new Intl.NumberFormat("en-KE", { style: "currency", currency: "KES", maximumFractionDigits: 0 }).format(totals.numericTotal);
+    : new Intl.NumberFormat("en-KE", {
+        style: "currency",
+        currency: "KES",
+        maximumFractionDigits: 0,
+      }).format(totals.numericTotal);
 
   return (
     <div id="catalog" className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
@@ -124,7 +139,10 @@ export function ProxyServicesStudio() {
           <TabButton active={mode === "pdfs"} onClick={() => setMode("pdfs")}>
             PDF Store
           </TabButton>
-          <TabButton active={mode === "proxies"} onClick={() => setMode("proxies")}>
+          <TabButton
+            active={mode === "proxies"}
+            onClick={() => setMode("proxies")}
+          >
             Proxy Services
           </TabButton>
         </div>
@@ -137,7 +155,9 @@ export function ProxyServicesStudio() {
                   {mode === "pdfs" ? "PDF Catalog" : "Proxy Subscriptions"}
                 </p>
                 <h2 className="mt-2 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                  {mode === "pdfs" ? "Sell digital PDFs with clean detail pages" : "Keep proxy plans simple and monthly"}
+                  {mode === "pdfs"
+                    ? "Sell digital PDFs with clean detail pages"
+                    : "Keep proxy plans simple and monthly"}
                 </h2>
               </div>
               <p className="text-xs font-medium text-muted-foreground">
@@ -148,11 +168,20 @@ export function ProxyServicesStudio() {
 
           <div className="divide-y divide-border/70">
             {catalogItems.map((item) => (
-              <div key={`${item.kind}-${item.slug}`} className="grid gap-4 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+              <div
+                key={`${item.kind}-${item.slug}`}
+                className="grid gap-4 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
+              >
                 <div className="flex min-w-0 gap-4">
                   <div className="relative hidden aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-md border border-border/70 bg-secondary/40 sm:block">
                     {item.image ? (
-                      <Image src={item.image} alt={item.title} fill sizes="96px" className="object-cover" />
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="96px"
+                        className="object-cover"
+                      />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,rgba(29,78,216,0.18),rgba(6,182,212,0.18))] text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                         Proxy
@@ -166,18 +195,29 @@ export function ProxyServicesStudio() {
                         {item.subtitle}
                       </span>
                       <span className="rounded-md border border-border/70 bg-background px-2.5 py-1 font-medium text-muted-foreground dark:border-white/10 dark:bg-white/5">
-                        {item.billing === "one-time" ? "Instant download" : item.billing === "monthly" ? "Monthly" : "Custom pricing"}
+                        {item.billing === "one-time"
+                          ? "Instant download"
+                          : item.billing === "monthly"
+                            ? "Monthly"
+                            : "Custom pricing"}
                       </span>
                     </div>
 
                     <div className="space-y-1">
-                      <h3 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">{item.title}</h3>
-                      <p className="max-w-2xl text-sm leading-7 text-muted-foreground">{item.description}</p>
+                      <h3 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                        {item.title}
+                      </h3>
+                      <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                        {item.description}
+                      </p>
                     </div>
 
                     <div className="flex flex-wrap gap-2">
                       {item.details.map((detail) => (
-                        <span key={detail} className="rounded-md border border-border/70 bg-secondary/30 px-2.5 py-1 text-[11px] font-medium text-foreground dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+                        <span
+                          key={detail}
+                          className="rounded-md border border-border/70 bg-secondary/30 px-2.5 py-1 text-[11px] font-medium text-foreground dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
+                        >
                           {detail}
                         </span>
                       ))}
@@ -185,27 +225,43 @@ export function ProxyServicesStudio() {
 
                     {item.kind === "proxy" ? (
                       <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                        {proxyPlans.find((plan) => plan.name === item.title)?.locations.map((location) => (
-                          <span key={location} className="rounded-md border border-border/70 bg-background px-2.5 py-1 dark:border-white/10 dark:bg-white/5">
-                            {location}
-                          </span>
-                        ))}
+                        {proxyPlans
+                          .find((plan) => plan.name === item.title)
+                          ?.locations.map((location) => (
+                            <span
+                              key={location}
+                              className="rounded-md border border-border/70 bg-background px-2.5 py-1 dark:border-white/10 dark:bg-white/5"
+                            >
+                              {location}
+                            </span>
+                          ))}
                       </div>
                     ) : null}
                   </div>
                 </div>
 
                 <div className="flex shrink-0 flex-col gap-3 lg:items-end">
-                  <p className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">{item.price}</p>
+                  <p className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                    {item.price}
+                  </p>
                   <div className="flex flex-wrap gap-2 lg:justify-end">
                     {item.href ? (
-                      <Button asChild variant="outline" className="rounded-md px-3 text-xs">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="rounded-md px-3 text-xs"
+                      >
                         <Link href={item.href}>
-                          View details <ExternalLink className="ml-1 size-3.5" />
+                          View details{" "}
+                          <ExternalLink className="ml-1 size-3.5" />
                         </Link>
                       </Button>
                     ) : null}
-                    <Button type="button" onClick={() => addToCart(item)} className="rounded-md px-3 text-xs">
+                    <Button
+                      type="button"
+                      onClick={() => addToCart(item)}
+                      className="rounded-md px-3 text-xs"
+                    >
                       Add to cart <PackagePlus className="ml-1 size-3.5" />
                     </Button>
                   </div>
@@ -216,25 +272,44 @@ export function ProxyServicesStudio() {
         </section>
       </div>
 
-      <aside id="checkout" className="min-w-0 space-y-4 lg:sticky lg:top-28 lg:self-start">
+      <aside
+        id="checkout"
+        className="min-w-0 space-y-4 lg:sticky lg:top-28 lg:self-start"
+      >
         <div className="rounded-2xl border border-border/70 bg-background/90 p-4 shadow-[0_20px_70px_-44px_rgba(15,23,42,0.25)] backdrop-blur sm:p-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">Cart & Checkout</p>
-            <h3 className="mt-2 text-lg font-semibold tracking-tight">Prepare your order</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+              Cart & Checkout
+            </p>
+            <h3 className="mt-2 text-lg font-semibold tracking-tight">
+              Prepare your order
+            </h3>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              Add PDFs or proxy plans, then enter the details required for Stripe or M-Pesa later.
+              Add PDFs or proxy plans, then enter the details required for
+              Stripe or M-Pesa later.
             </p>
           </div>
 
           <div className="mt-4 space-y-3">
             {cart.length > 0 ? (
               cart.map((item) => (
-                <div key={`${item.kind}-${item.slug}`} className="flex items-center justify-between gap-3 rounded-md border border-border/70 bg-secondary/30 px-3 py-2.5 dark:border-white/10 dark:bg-white/5">
+                <div
+                  key={`${item.kind}-${item.slug}`}
+                  className="flex items-center justify-between gap-3 rounded-md border border-border/70 bg-secondary/30 px-3 py-2.5 dark:border-white/10 dark:bg-white/5"
+                >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-foreground">{item.title}</p>
-                    <p className="text-xs text-muted-foreground">{item.price}</p>
+                    <p className="truncate text-sm font-medium text-foreground">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.price}
+                    </p>
                   </div>
-                  <button type="button" onClick={() => removeFromCart(item.slug)} className="text-xs font-medium text-primary">
+                  <button
+                    type="button"
+                    onClick={() => removeFromCart(item.slug)}
+                    className="text-xs font-medium text-primary"
+                  >
                     Remove
                   </button>
                 </div>
@@ -248,29 +323,57 @@ export function ProxyServicesStudio() {
 
           <div className="mt-4 flex items-center justify-between border-t border-border/70 pt-4 text-sm">
             <span className="text-muted-foreground">Estimated total</span>
-            <span className="font-semibold text-foreground">{cart.length > 0 ? totalLabel : "KSh 0"}</span>
+            <span className="font-semibold text-foreground">
+              {cart.length > 0 ? totalLabel : "KSh 0"}
+            </span>
           </div>
 
           <form className="mt-5 space-y-3" onSubmit={handleCheckoutSubmit}>
-            <CheckoutField label="Full name" value={fullName} onChange={setFullName} placeholder="John Doe" />
-            <CheckoutField label="Email" value={email} onChange={setEmail} placeholder="you@example.com" type="email" />
-            <CheckoutField label="Phone number" value={phone} onChange={setPhone} placeholder="07xx xxx xxx" />
+            <CheckoutField
+              label="Full name"
+              value={fullName}
+              onChange={setFullName}
+              placeholder="Kevin Kamau"
+            />
+            <CheckoutField
+              label="Email"
+              value={email}
+              onChange={setEmail}
+              placeholder="you@example.com"
+              type="email"
+            />
+            <CheckoutField
+              label="Phone number"
+              value={phone}
+              onChange={setPhone}
+              placeholder="07xx xxx xxx"
+            />
 
             <label className="block space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">Payment method</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                Payment method
+              </span>
               <select
                 value={paymentMethod}
-                onChange={(event) => setPaymentMethod(event.target.value as (typeof paymentMethods)[number])}
+                onChange={(event) =>
+                  setPaymentMethod(
+                    event.target.value as (typeof paymentMethods)[number],
+                  )
+                }
                 className="h-10 w-full rounded-md border border-border/70 bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-white/5"
               >
                 {paymentMethods.map((method) => (
-                  <option key={method} value={method}>{method}</option>
+                  <option key={method} value={method}>
+                    {method}
+                  </option>
                 ))}
               </select>
             </label>
 
             <label className="block space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">Notes</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                Notes
+              </span>
               <textarea
                 rows={4}
                 placeholder="Tell us any delivery or billing notes..."
@@ -278,19 +381,26 @@ export function ProxyServicesStudio() {
               />
             </label>
 
-            <Button type="submit" className="h-10 w-full justify-center rounded-md px-3 text-center text-xs" variant="outline">
+            <Button
+              type="submit"
+              className="h-10 w-full justify-center rounded-md px-3 text-center text-xs"
+              variant="outline"
+            >
               Save Checkout Details
             </Button>
 
             {checkoutNote ? (
-              <p className="text-xs leading-6 text-muted-foreground">{checkoutNote}</p>
+              <p className="text-xs leading-6 text-muted-foreground">
+                {checkoutNote}
+              </p>
             ) : null}
           </form>
 
           <div className="mt-5 rounded-md border border-border/70 bg-secondary/20 px-3 py-3 text-xs leading-6 text-muted-foreground dark:border-white/10 dark:bg-white/5">
             <p className="font-medium text-foreground">Checkout contract</p>
             <p className="mt-1">
-              Stripe and M-Pesa fields will connect to the backend later. This page only captures the UI contract.
+              Stripe and M-Pesa fields will connect to the backend later. This
+              page only captures the UI contract.
             </p>
           </div>
         </div>
@@ -314,7 +424,9 @@ function TabButton({
       onClick={onClick}
       className={cn(
         "rounded-md px-3 py-2 text-xs font-semibold transition-colors",
-        active ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
+        active
+          ? "bg-primary text-primary-foreground shadow-sm"
+          : "text-muted-foreground hover:text-foreground",
       )}
     >
       {children}
@@ -337,7 +449,9 @@ function CheckoutField({
 }>) {
   return (
     <label className="block space-y-2">
-      <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">{label}</span>
+      <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+        {label}
+      </span>
       <input
         type={type}
         value={value}
